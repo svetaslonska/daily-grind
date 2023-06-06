@@ -13,6 +13,16 @@ let today = myDate.getDay();
 
 let coffee = "";
 
+//use location object to access querystring (address bar)
+const queryString = window.location.search;
+    
+//output to console    
+console.log(queryString);
+    
+//separate query string parameters
+const urlParams = new URLSearchParams(queryString);
+
+
 function coffeeTemplate(coffee){
 
     return `
@@ -24,6 +34,13 @@ function coffeeTemplate(coffee){
 }
 
 //test today = 3;
+
+if(urlParams.has("day")){//from querystring
+    today = urlParams.get("day");
+ }
+
+ today = parseInt(today);
+ 
 
 switch(today){
 
@@ -42,6 +59,15 @@ switch(today){
 
     case 2:
         today = "Tuesday";
+
+         coffee = {
+            name: "Mocha",
+            pic: "images/mocha.jpg",
+            alt: "A picture of mocha",
+            color: "brown",
+            day: "Tuesday",
+            desc: `I like mocha!`
+        };
     break;
 
     case 3:
@@ -52,15 +78,9 @@ switch(today){
         today ="Day is unknown!";
 }
 
-coffee = {
-    name: "Bubble Tea",
-    pic: "images/bubble-tea.jpg",
-    alt: "A picture of a bubble tea",
-    color: "pink",
-    day: "Wednesday",
-    desc: `I love me some bubble tea!`
-}
 
 document.getElementById("coffee-cup").innerHTML = coffeeTemplate(coffee);
+
+document.querySelector("html").style.backgroundColor = coffee.color;
 
 console.log(coffee);
